@@ -80,8 +80,8 @@ def find_route(start, goal_dist, graph):
             neighbors = graph.neighbors(curr)
             # # neighbors for part 2)
             # neighbors = sorted(graph.neighbors(curr),
-                                key=lambda x: get_bearing_diff(graph.edges[prev, curr, 0]['bearing'],
-                                                                graph.edges[curr, x, 0]['bearing']))
+            key=lambda x: get_bearing_diff(graph.edges[prev, curr, 0]['bearing'],
+                graph.edges[curr, x, 0]['bearing'])
 
             for w in neighbors:
                 if good(gst, lensofar, curr, w):
@@ -106,7 +106,7 @@ def total_elevation_gain(gr,rt):
 # Wreck Beach
 lat, lon = 49.255, -123.255
 
-start = ox.get_nearest_node(graph, (lat, lon)) # start is a node number -- not very useful to us
+start = ox.nearest_nodes(graph, lon, lat) # start is a node number -- not very useful to us
 startlat, startlon = graph.nodes[start]['y'], graph.nodes[start]['x']
 
 
