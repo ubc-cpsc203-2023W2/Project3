@@ -3,8 +3,8 @@ import networkx as nx
 import requests
 import pandas as pd
 
-
-addr = "UBC Vancouver, BC, Canada"
+# TODO: Change the address to a location of your choice!
+addr = "VPL Vancouver, BC, Canada"
 
 graph = ox.graph_from_address(addr, dist=4000, dist_type="network", network_type='walk', simplify=True)
 ox.add_edge_bearings(graph, precision=1)
@@ -57,17 +57,16 @@ result = pd.DataFrame.from_records(altitude_records, index=node_gdfs.index)
 nx.set_node_attributes(graph, name="elevation", values=result["elevation"].to_dict())
 
 # save graph to GraphML on disk for later use
-ox.io.save_graphml(graph, filepath='graph_ubc.gml')
+ox.io.save_graphml(graph, filepath='graph_student.gml')
 
 # =================================
 # Visualize general map
 fig, ax = ox.plot_graph(graph)
-fig.savefig('ubc_map.png')
+fig.savefig('student_map.png')
 
 # =================================
 # Visualize map with elevation
 
 nc = ox.plot.get_node_colors_by_attr(graph, 'elevation', cmap='plasma')
 fig, ax = ox.plot_graph(graph, node_color=nc, node_size=5, edge_color='#333333', bgcolor='k')
-fig.savefig('ubc_map_elevation.png')
-
+fig.savefig('student_map_elevation.png')
