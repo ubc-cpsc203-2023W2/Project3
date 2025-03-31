@@ -21,7 +21,7 @@ fig.savefig('ubc_map.png')
 # Visualize map with elevation for sanity check
 nc = ox.plot.get_node_colors_by_attr(graph, 'elevation', cmap='plasma')
 fig, ax = ox.plot_graph(graph, node_color=nc, node_size=5, edge_color='#333333', bgcolor='k')
-fig.savefig('ubc_map_elevation.png')
+fig.savefig('ubc_elevation.png')
 
 
 # =======================================================
@@ -45,7 +45,8 @@ route, time = routeFinding.find_route(start, goal_dist, graph) # calls the main 
 # variable 'route' is a DiGraph, but we want a sequence of vertices along the solution path.
 # take a look at these variables to see what's going on.
 sorted_lst = sorted(route.edges(), key=lambda x: route.edges[x[0], x[1]]['time'])
-routevertices = # TODO we used a list comprehension to assemble the list of vertices in order
+# TODO: Use a list comprehension to assemble the list of vertices in order.
+routevertices = []
 
 # find coordinates of stopping point: last node on the route
 endlat, endlon = graph.nodes[routevertices[-1]]['x'], graph.nodes[routevertices[-1]]['y']
