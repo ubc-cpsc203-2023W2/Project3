@@ -14,8 +14,9 @@ We will obtain map data from [OpenStreetMap](https://www.openstreetmap.org/), an
 
 If you haven't already, make sure you install the packages for working with maps and graphs:
 
-- `conda install osmnx`
-- `conda install folium`
+```terminal
+conda install osmnx
+```
 
 ### Getting the Starter Code
 
@@ -47,7 +48,7 @@ If you get annoyed by having to close plot windows every time you run the script
 
 In `routePlan.py`, we provide a partially completed version (with bugs!) of our workout planner using helper functions from `routeFinding.py`. You will debug and complete our implementation, including the following features:
 
-1. Find any path in the UBC graph whose total distance is greater some target length using depth first search.
+1. Find any path in the UBC graph whose total distance is between 100% and 110% of a specified target length using depth first search.
 1. Add a constraint that we always take the "straightest" direction out of any vertex.
 1. Report total elevation gain.
 1. Provide a visualization of the route in rainbow color with the calculated elevation gain.
@@ -56,17 +57,17 @@ After debugging, your final task is to choose a map at some new location in the 
 
 The images below show the differences between the first and second tasks in the list above. In both cases, the route starts near Wreck beach and proceeds for at least 5000m. In the first task, we let the algorithm determine arbitrarily which direction we should go at every vertex:
 
-![A workout route through UBC that makes a lot of turns](./route_graph_workout_example_curvy.png)
+![A workout route through UBC that makes a lot of turns](./route_graph_workout_curvy_example.jpg)
 
 In the second task, we constrain the algorithm to choose the outgoing direction at a vertex which is closest to the incoming direction:
 
-![A workout route through UBC that avoids turns](./route_graph_workout_example.png)
+![A workout route through UBC that avoids turns](./route_graph_workout_straight_example.jpg)
 
 ### Debugging
 
 There are bugs present in both `routePlan.py` and `routeFindng.py`.  Most of the bugs are small logic errors.  Within the script `routePlan.py`there are:
 
-- 1 existing bugs.
+- 1 existing bug.
 - 2 areas to write your own code, marked by `# TODO`.
 
 Within the module `routeFinding.py` there are:

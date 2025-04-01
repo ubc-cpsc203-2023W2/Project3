@@ -7,7 +7,7 @@ import pandas as pd
 addr = "VPL Vancouver, BC, Canada"
 
 graph = ox.graph_from_address(addr, dist=4000, dist_type="network", network_type='walk', simplify=True)
-ox.add_edge_bearings(graph, precision=1)
+ox.add_edge_bearings(graph)
 
 # convert to GeoDataFrames
 # our application uses the geodfs to simplify the assembly of elevation data at each node

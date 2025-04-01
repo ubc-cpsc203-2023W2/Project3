@@ -1,9 +1,11 @@
 import networkx as nx
 from collections import deque
 import colorsys
-from folium.features import DivIcon
-import folium
 import random
+
+# At each intersection, should we try to go as straight as possible?
+# Set to False for task 1, then switch to False for task 2.
+STRAIGHTER_PATH = False
 
 # =================================
 # Workout planning with length, bearing, and elevation
@@ -14,16 +16,16 @@ import random
 
 # Helper function that determines if edge (v,w) is a valid candidate for adding to the graph
 def good(gst, d, v, w, graph, goal_dist):
-    return v not in list(gst.adj[w]) and \
-        graph.edges[v, w, 0]['length'] > 0 \
-        and d + graph.edges[v, w, 0]['length'] < goal_dist
+    return (v not in gst.adj[w]
+            and graph.edges[v, w, 0]['length'] > 0
+            and d + graph.edges[v, w, 0]['length'] < goal_dist)
 
 
 
 # Helper function that returns the absolute difference between any 2 given directions.
 # Note that the value should never be more than 180, since a left turn of x is
 # equivalent to a right turn of (360 - x).
-def get_bearing_diff(b1,b2):
+def get_bearing_diff(b1, b2):
     bdiff = abs(b1-b2) % 360 # allows for neg and large bearings
     return bdiff
 
@@ -59,15 +61,17 @@ def find_route(start, goal_dist, graph):
             if lensofar > goal_dist:
                 return gst, clock
 
-            # neighbors for part 1 - just finding a path
-            neighbors = graph.neighbors(curr)
-            # # neighbors for part 2 - the "straightest" path
-            # neighbors = sorted(graph.neighbors(curr),
-            #                    key=lambda x: get_bearing_diff(graph.edges[prev, curr, 0]['bearing'],
-            #                    graph.edges[curr, x, 0]['bearing'])
+            if STRAIGHTER_PATH:
+                # neighbors for part 2 - the "straightest" path
+                neighbors = sorted(graph.neighbors(curr),
+                                    key=lambda x: get_bearing_diff(graph.edges[prev, curr, 0]['bearing'],
+                                                                    graph.edges[curr, x, 0]['bearing']))
+            else:
+                # neighbors for part 1 - just finding a path
+                neighbors = graph.neighbors(curr)
 
             for w in neighbors:
-                if good(gst, lensofar, curr, w, graph):
+                if good(gst, lensofar, curr, w, graph, goal_dist):
                     gstnew = gst.copy() # copy the path so we don't have to deal w backtracking. ok for small graphs.
                     stack.append((gstnew, curr, w, lensofar + graph.edges[curr, w, 0]['length'], clock + 1))
 
@@ -75,10 +79,9 @@ def find_route(start, goal_dist, graph):
 # edges whose elevation gain is negative should be ignored.
 # you can refer to a node's elevation by: gr.nodes[rt[k]]['elevation'], where k is the kth element
 # of the rt list.
-def total_elevation_gain(gr,rt):
-    eg = 0
+def total_elevation_gain(gr, rt):
     # TODO your code here
-    return eg
+    pass
 
 
 # hsv color representation gives a rainbow from red and back to red over values 0 to 1.
