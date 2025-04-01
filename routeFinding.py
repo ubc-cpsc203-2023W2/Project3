@@ -4,7 +4,7 @@ import colorsys
 import random
 
 # At each intersection, should we try to go as straight as possible?
-# Set to False for task 1, then switch to False for task 2.
+# Set to False for task 1, then switch to True for task 2.
 STRAIGHTER_PATH = False
 
 # =================================
